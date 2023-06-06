@@ -1,8 +1,6 @@
 import { Link } from "react-router-dom";
 
 function Movies() {
-    return <><p>Movies</p>
-        <Link to={'/movies/:movieId'}>До уточнень</Link>
-    </>
+    return <p>Movies</p>
 }
 export default Movies;
