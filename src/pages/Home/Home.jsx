@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { fetchTrendingMovies } from 'servise/api';
 
 function Home() {
-  const [moviesData, setMoviesData] = useState('');
+  const [moviesData, setMoviesData] = useState([]);
+  const location = useLocation();
+  // console.log(location);
 
   useEffect(() => {
     fetchTrendingMovies()
@@ -11,15 +13,12 @@ function Home() {
       .catch(error => console.log(error));
   }, []);
 
-  // console.log('moviesData;', moviesData);
-
   return (
     <div>
       <ul>
-        {moviesData &&
-          moviesData.map(({ id, title, name }) => (
+        {moviesData?.map(({ id, title, name }) => (
             <li key={id}>
-              <Link to={`/movies/${id}`}>{title || name}</Link>
+              <Link to={`/movies/${id}`} state={{ from: location }}>{title || name}</Link>
             </li>
           ))}
       </ul>
