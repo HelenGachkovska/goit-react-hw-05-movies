@@ -11,7 +11,7 @@ function Home() {
       .catch(error => console.log(error));
   }, []);
 
-  console.log('moviesData;', moviesData);
+  // console.log('moviesData;', moviesData);
 
   return (
     <div>

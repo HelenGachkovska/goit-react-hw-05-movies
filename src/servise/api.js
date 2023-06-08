@@ -8,7 +8,19 @@ export function fetchTrendingMovies() {
 }
 
 export function fetchMoviesDetals(movieId) {
-  return fetch(`${URL}/movie/${movieId}day?api_key=${APIKEY}`).then(response =>
+  return fetch(`${URL}/movie/${movieId}?api_key=${APIKEY}`).then(response =>
+    response.json()
+  );
+}
+
+export function fetchMoviesCast(movieId) {
+  return fetch(`${URL}/movie/${movieId}/credits?api_key=${APIKEY}`).then(response =>
+    response.json()
+  );
+}
+
+export function fetchMoviesReviews(movieId) {
+  return fetch(`${URL}/movie/${movieId}/reviews?api_key=${APIKEY}`).then(response =>
     response.json()
   );
 }
