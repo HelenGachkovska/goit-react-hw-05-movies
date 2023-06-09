@@ -1,6 +1,7 @@
-import { useEffect, useRef, useState } from 'react';
+import { Suspense, useEffect, useRef, useState } from 'react';
 import { Outlet, Link, useParams, useLocation } from 'react-router-dom';
 import { fetchMoviesDetals } from 'servise/api';
+import PropTypes from 'prop-types';
 
 function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState('');
@@ -13,10 +14,19 @@ function MovieDetails() {
     fetchMoviesDetals(movieId)
       .then(data => setMovieDetails(data))
       .catch(error => console.log(error));
-  }, []);
+  }, [movieId]);
 
   const { title, overview, genres, poster_path, name, vote_average } =
     movieDetails;
+
+  if (!title && !name) {
+    return (
+      <>
+        <Link to={backLincLocationRef.current}>Go back</Link>
+        <p>Sorry, no movie information found</p>
+      </>
+    );
+  }
 
   return (
     <>
@@ -35,9 +45,27 @@ function MovieDetails() {
 
       <Link to={'Cast'}>Cast</Link>
       <Link to={'Reviews'}>Reviews</Link>
-      <Outlet />
+      <Suspense fallback={<div>Loading...</div>}>
+        <Outlet />
+      </Suspense>
     </>
   );
 }
+
+MovieDetails.propTypes = {
+  movieDetails: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    name: PropTypes.string.isRequired,
+    poster_path: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
+    vote_average: PropTypes.number,
+    overview: PropTypes.string.isRequired,
+  }),
+
+  genres: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    name: PropTypes.string.isRequired,
+  }),
+};
 
 export default MovieDetails;

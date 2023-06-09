@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, Suspense } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { fetchSearchMovies } from 'servise/api';
+import PropTypes from 'prop-types';
 
 function Movies() {
   const [searchMovies, setSearchMovies] = useState([]);
@@ -33,16 +34,29 @@ function Movies() {
         ></input>
         <button>Search movie</button>
       </form>
-      <ul>
-        {searchMovies?.map(({ id, title, name }) => (
-          <li key={id}>
-            <Link to={`/movies/${id}`} state={{ from: location }}>
-              {title || name}
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <Suspense fallback={<div>Loading...</div>}>
+        <ul>
+          {searchMovies?.map(({ id, title, name }) => (
+            <li key={id}>
+              <Link to={`/movies/${id}`} state={{ from: location }}>
+                {title || name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </Suspense>
     </>
   );
 }
+
+Movies.propTypes = {
+  searchMovies: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
+};
+
 export default Movies;

@@ -1,6 +1,7 @@
 import { useState, useEffect} from 'react';
 import {useParams } from 'react-router-dom';
-import {fetchMoviesCast} from 'servise/api'
+import { fetchMoviesCast } from 'servise/api';
+import PropTypes from 'prop-types';
 
 function Cast() {
     const [castInfo, setCastInfo] = useState('');
@@ -31,4 +32,15 @@ function Cast() {
         )}
       </ul>
 }
+
+Cast.propTypes = {
+  castInfo: PropTypes.shape({
+    original_name: PropTypes.string.isRequired,
+    character: PropTypes.string.isRequired,
+    profile_path: PropTypes.string,
+    id: PropTypes.number.isRequired,
+    popularity: PropTypes.number,
+  }),
+};
+
 export default Cast;

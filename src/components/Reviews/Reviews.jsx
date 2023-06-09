@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMoviesReviews } from 'servise/api';
+import PropTypes from 'prop-types';
 
 function Reviews() {
-  const[reviewsInfo, setReviewsInfo] = useState([]);
+  const [reviewsInfo, setReviewsInfo] = useState([]);
   const param = useParams();
   const movieId = param.movieId;
 
@@ -13,13 +14,10 @@ function Reviews() {
       .catch(error => console.log(error));
   }, []);
 
-  console.log(reviewsInfo);
-
-  return <div>
+  return (
+    <div>
       {reviewsInfo.length === 0 ? (
-        <p>
-         There are no reviews for this movie
-        </p>
+        <p>There are no reviews for this movie</p>
       ) : (
         <ul>
           {reviewsInfo?.map(({ id, author, content }) => (
@@ -30,6 +28,16 @@ function Reviews() {
           ))}
         </ul>
       )}
-    </div>;
+    </div>
+  );
 }
+
+Reviews.propTypes = {
+  reviewsInfo: PropTypes.shape({
+    id: PropTypes.number.isRequired,
+    author: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+  }),
+};
+
 export default Reviews;

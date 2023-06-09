@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { fetchTrendingMovies } from 'servise/api';
+import PropTypes from 'prop-types';
 
 function Home() {
   const [moviesData, setMoviesData] = useState([]);
@@ -25,5 +26,15 @@ function Home() {
     </div>
   );
 }
+
+Home.propTypes = {
+  moviesData: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.number.isRequired,
+      title: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired,
+    })
+  ),
+};
 
 export default Home;
