@@ -20,7 +20,7 @@ function MovieDetails() {
 
   return (
     <>
-      <Link to={backLincLocationRef.current}>Back to movies</Link>
+      <Link to={backLincLocationRef.current}>Go back</Link>
       <img
         src={`https://image.tmdb.org/t/p/w500${poster_path}`}
         alt={title}

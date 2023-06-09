@@ -24,3 +24,9 @@ export function fetchMoviesReviews(movieId) {
     response.json()
   );
 }
+
+export function fetchSearchMovies(queryMovies) {
+  return fetch(`${URL}/search/movie?api_key=${APIKEY}&query=${queryMovies}`).then(response =>
+    response.json()
+  );
+}
