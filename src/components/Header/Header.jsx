@@ -1,12 +1,12 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { Nav, Navlink } from './Header.styled';
 
 function Header() {
   return (
-    <nav>
-      <NavLink to="/">Home</NavLink>
-      <NavLink to="/movies">Muvies</NavLink>
-    </nav>
+    <Nav>
+      <Navlink to="/">Home</Navlink>
+      <Navlink to="/movies">Muvies</Navlink>
+    </Nav>
   );
 }
 

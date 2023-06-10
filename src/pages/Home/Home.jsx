@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { fetchTrendingMovies } from 'servise/api';
 import PropTypes from 'prop-types';
+import { Item, ItemLink, Title } from './Home.styled';
 
 function Home() {
   const [moviesData, setMoviesData] = useState([]);
   const location = useLocation();
-  // console.log(location);
 
   useEffect(() => {
     fetchTrendingMovies()
@@ -16,12 +16,15 @@ function Home() {
 
   return (
     <div>
+      <Title>Trending today</Title>
       <ul>
         {moviesData?.map(({ id, title, name }) => (
-            <li key={id}>
-              <Link to={`/movies/${id}`} state={{ from: location }}>{title || name}</Link>
-            </li>
-          ))}
+          <Item key={id}>
+            <ItemLink to={`/movies/${id}`} state={{ from: location }}>
+              {title || name}
+            </ItemLink>
+          </Item>
+        ))}
       </ul>
     </div>
   );

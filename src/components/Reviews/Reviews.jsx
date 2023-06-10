@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { fetchMoviesReviews } from 'servise/api';
 import PropTypes from 'prop-types';
+import { RewievsItem } from './Reviews.styled';
 
 function Reviews() {
   const [reviewsInfo, setReviewsInfo] = useState([]);
@@ -12,7 +13,7 @@ function Reviews() {
     fetchMoviesReviews(movieId)
       .then(data => setReviewsInfo(data.results))
       .catch(error => console.log(error));
-  }, []);
+  }, [movieId]);
 
   return (
     <div>
@@ -21,10 +22,10 @@ function Reviews() {
       ) : (
         <ul>
           {reviewsInfo?.map(({ id, author, content }) => (
-            <li key={id}>
+            <RewievsItem key={id}>
               <h2>Author: {author}</h2>
               <p>{content}</p>
-            </li>
+            </RewievsItem>
           ))}
         </ul>
       )}

@@ -1,7 +1,17 @@
 import { Suspense, useEffect, useRef, useState } from 'react';
-import { Outlet, Link, useParams, useLocation } from 'react-router-dom';
+import { Outlet, useParams, useLocation } from 'react-router-dom';
 import { fetchMoviesDetals } from 'servise/api';
 import PropTypes from 'prop-types';
+import {
+  ButtonLink,
+  Container,
+  MovieInfo,
+  InfoBox,
+  InfoLink,
+  InfoItem,
+  InfoList,
+  Text,
+} from './MovieDetails.styled';
 
 function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState('');
@@ -16,35 +26,56 @@ function MovieDetails() {
       .catch(error => console.log(error));
   }, [movieId]);
 
+  console.log(movieDetails);
+
   const { title, overview, genres, poster_path, name, vote_average } =
     movieDetails;
 
-  if (!title && !name) {
-    return (
-      <>
-        <Link to={backLincLocationRef.current}>Go back</Link>
-        <p>Sorry, no movie information found</p>
-      </>
-    );
-  }
+  // if (!title && !name) {
+  //   return (
+  //     <>
+  //       <ButtonLink to={backLincLocationRef.current}>Go back</ButtonLink>
+  //       <Suspense fallback={<div>Loading...</div>}>
+  //         <Text>Sorry, no movie information found</Text>
+  //         </Suspense>
+  //     </>
+  //   );
+  // }
 
   return (
     <>
-      <Link to={backLincLocationRef.current}>Go back</Link>
-      <img
-        src={`https://image.tmdb.org/t/p/w500${poster_path}`}
-        alt={title}
-      ></img>
-      <h1>{title || name}</h1>
-      <p>User score: {vote_average}%</p>
-      <p>{overview}</p>
-      <p>Genres: </p>
-      {genres?.map(({ id, name }) => (
-        <span key={id}>{`${name}, `}</span>
-      ))}
+      <ButtonLink to={backLincLocationRef.current}>Go back</ButtonLink>
+      <Container>
+        <img
+          src={`https://image.tmdb.org/t/p/w500${poster_path}`}
+          alt={title}
+          width={320}
+          height={380}
+        ></img>
 
-      <Link to={'Cast'}>Cast</Link>
-      <Link to={'Reviews'}>Reviews</Link>
+        <MovieInfo>
+          <h1>{title || name}</h1>
+          <h3>User score: {vote_average}%</h3>
+          <h3>Overview</h3>
+          <p>{overview}</p>
+          <h3>Genres: </h3>
+          {genres?.map(({ id, name }) => (
+            <span key={id}>{`${name}, `}</span>
+          ))}
+        </MovieInfo>
+      </Container>
+
+      <InfoBox>
+        <h4>Additional information</h4>
+        <InfoList>
+          <InfoItem>
+            <InfoLink to={'Cast'}>Cast</InfoLink>
+          </InfoItem>
+          <InfoItem>
+            <InfoLink to={'Reviews'}>Reviews</InfoLink>
+          </InfoItem>
+        </InfoList>
+      </InfoBox>
       <Suspense fallback={<div>Loading...</div>}>
         <Outlet />
       </Suspense>
