@@ -9,8 +9,7 @@ import {
   InfoBox,
   InfoLink,
   InfoItem,
-  InfoList,
-  Text,
+  InfoList
 } from './MovieDetails.styled';
 
 function MovieDetails() {
